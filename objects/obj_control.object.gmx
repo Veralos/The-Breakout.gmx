@@ -89,12 +89,13 @@ else {
     message--;
 }
 
+room_speed = 60;
+
 if (instance_number(obj_player) &gt; 0) {
-    room_speed = 60;
     view_xview[0] = obj_player.x - view_wview[0] / 2;
     view_yview[0] = obj_player.y - view_hview[0] / 2;
     
-    if (keyboard_check_pressed(ord('R')) || hp &lt;= 0) {
+    if (obj_input.restart_pressed || hp &lt;= 0) {
         audio_pause_sound(mus_main);
         with (obj_player) {
             instance_destroy();

@@ -3,8 +3,8 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-1000</depth>
-  <persistent>0</persistent>
+  <depth>0</depth>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,13 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>audio_play_sound(mus_title, 0, true);
+            <string>move_left = false;
+move_right = false;
+move_up = false;
+move_down = false;
+hold_pressed = false;
+restart_pressed = false;
+
+gamepad_set_axis_deadzone(0, 0.3);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -48,44 +55,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (obj_input.hold_pressed) {
-    audio_stop_sound(mus_title);
-    audio_play_sound(snd_start, 0, false);
-    room_goto_next();
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>draw_set_halign(fa_middle);
-draw_set_valign(fa_middle);
-draw_set_color(c_white);
+            <string>move_left = false;
+move_right = false;
+move_up = false;
+move_down = false;
+hold_pressed = false;
+restart_pressed = false;
 
-draw_set_font(fnt_end);
-
-draw_text(room_width / 2, room_height * (1 / 3), "The Breakout");
-
-draw_set_font(fnt_main);
-
-draw_text(room_width / 2, room_height * (2 / 3), "Press A to start");
+move_left = keyboard_check(vk_left) || gamepad_axis_value(0, gp_axislh) &lt; 0;
+move_right = keyboard_check(vk_right) || gamepad_axis_value(0, gp_axislh) &gt; 0;
+move_up = keyboard_check(vk_up) || gamepad_axis_value(0, gp_axislv) &lt; 0;
+move_down = keyboard_check(vk_down) || gamepad_axis_value(0, gp_axislv) &gt; 0;
+hold_pressed = keyboard_check_pressed(ord('A')) || keyboard_check_pressed(ord('Q')) || gamepad_button_check_pressed(0, gp_face1);
+restart_pressed = keyboard_check_pressed(ord('R')) || gamepad_button_check_pressed(0, gp_face2);
 </string>
           </argument>
         </arguments>

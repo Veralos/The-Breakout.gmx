@@ -84,7 +84,7 @@ else {
     if (pause &gt; 0) {
         pause--;
     }
-    else if (keyboard_check_pressed(ord('A')) || keyboard_check_pressed(ord('Q'))) {
+    else if (obj_input.hold_pressed) {
         audio_play_sound(snd_stop, 0, false);
         pause = 60;
     }

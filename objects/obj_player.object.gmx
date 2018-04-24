@@ -100,16 +100,16 @@ else {
     visible = true;
 }
 
-if (keyboard_check(vk_left)) {
+if (obj_input.move_left) {
     speed_x -= accel;
 }
-if (keyboard_check(vk_right)) {
+if (obj_input.move_right) {
     speed_x += accel;
 }
-if (keyboard_check(vk_up)) {
+if (obj_input.move_up) {
     speed_y -= accel;
 }
-if (keyboard_check(vk_down)) {
+if (obj_input.move_down) {
     speed_y += accel;
 }
 

@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>randomize();
 surface_resize(application_surface, 512, 288);
+instance_create(0, 0, obj_input);
 room_goto_next();
 </string>
           </argument>
