@@ -290,7 +290,7 @@ else {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (other.speed &gt;= 5) {
+            <string>if (other.speed &gt;= 8) {
     event_user(0);
 }
 </string>

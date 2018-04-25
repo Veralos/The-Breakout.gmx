@@ -29,7 +29,7 @@
 repeat(8 + random(4)) {
     instance_create(x, y, obj_part);
 }
-room_speed = 5;
+room_speed = 10;
 </string>
           </argument>
         </arguments>
@@ -52,7 +52,7 @@ room_speed = 5;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (other.speed &gt;= 5) {
+            <string>if (other.can_damage) {
     instance_destroy();
 }
 </string>

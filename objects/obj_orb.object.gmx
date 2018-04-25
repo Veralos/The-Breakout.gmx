@@ -58,7 +58,7 @@ with (destroy) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (other.speed &gt; 5) {
+            <string>if (other.can_damage) {
     instance_destroy();
 }
 </string>

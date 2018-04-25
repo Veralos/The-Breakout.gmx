@@ -31,6 +31,8 @@ speed_y = 0;
 pause = 0;
 draw_x = obj_player.x
 draw_y = obj_player.y;
+can_damage = false;
+
 image_speed = 0;
 </string>
           </argument>
@@ -54,7 +56,9 @@ image_speed = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (pause &gt; 30 || instance_number(obj_player) &lt; 1) {
+            <string>can_damage = false;
+
+if (pause &gt; 30 || instance_number(obj_player) &lt; 1) {
     pause--;
     if (pause = 30) {
         audio_play_sound(snd_go, 0, false);
@@ -74,11 +78,12 @@ else {
     }
     friction = 0.5;
     
-    if (speed &gt;= 5) {
+    if (speed &gt;= 6) {
         audio_listener_position(obj_player.x, obj_player.y, 0);
         audio_emitter_position(emit, x, y, 0);
         audio_play_sound_on(emit, snd_swing, 0, false);
         instance_create(x, y, obj_afterimage);
+        can_damage = true
     }
     
     if (pause &gt; 0) {
