@@ -22,7 +22,10 @@
     <sound>sound\snd_smash</sound>
     <sound>sound\mus_end</sound>
     <sound>sound\mus_title</sound>
-    <sound>sound\snd_start</sound>
+    <sound>sound\snd_confirm</sound>
+    <sound>sound\snd_select</sound>
+    <sound>sound\snd_error</sound>
+    <sound>sound\snd_back</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_player</sprite>
@@ -66,12 +69,20 @@
     <sprite>sprites\spr_locked_1</sprite>
     <sprite>sprites\spr_locked_2</sprite>
     <sprite>sprites\spr_orb_2</sprite>
+    <sprite>sprites\spr_sitting</sprite>
+    <sprite>sprites\spr_cell</sprite>
+    <sprite>sprites\sprite43</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_tiles</background>
     <background>background\bg_grass</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_play.gml</script>
+    <script>scripts\scr_quit.gml</script>
+    <script>scripts\scr_error.gml</script>
+  </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
     <font>fonts\fnt_end</font>
@@ -109,10 +120,11 @@
     <object>objects\obj_cheer</object>
     <object>objects\obj_title</object>
     <object>objects\obj_input</object>
+    <object>objects\obj_title_2</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
-    <room>rooms\rm_title</room>
+    <room>rooms\rm_title_2</room>
     <room>rooms\rm_begin</room>
     <room>rooms\rm_start</room>
     <room>rooms\rm_guard</room>
@@ -129,6 +141,7 @@
     <room>rooms\rm_fight</room>
     <room>rooms\rm_final</room>
     <room>rooms\rm_end</room>
+    <room>rooms\rm_title</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

@@ -68,7 +68,7 @@ for (var i = 0; i &lt; 2; i++) {
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_bad">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -85,7 +85,7 @@ for (var i = 0; i &lt; 2; i++) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (other.can_damage) {
+            <string>if (place_meeting(x, y, obj_bad) &amp;&amp; obj_bad.can_damage) {
     instance_destroy();
 }
 </string>
