@@ -81,10 +81,22 @@
   <scripts name="scripts">
     <script>scripts\scr_play.gml</script>
     <script>scripts\scr_quit.gml</script>
+    <script>scripts\scr_options.gml</script>
+    <script>scripts\scr_controls.gml</script>
+    <script>scripts\scr_keyboard.gml</script>
+    <script>scripts\scr_gamepad.gml</script>
+    <script>scripts\scr_back.gml</script>
+    <script>scripts\scr_fullscreen.gml</script>
     <script>scripts\scr_error.gml</script>
+    <script>scripts\scr_menu_item.gml</script>
+    <script>scripts\scr_menu_item_addon.gml</script>
+    <script>scripts\scr_addon_fullscreen.gml</script>
+    <script>scripts\scr_addon_scale.gml</script>
+    <script>scripts\scr_scale.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
+    <font>fonts\fnt_small</font>
     <font>fonts\fnt_end</font>
   </fonts>
   <objects name="objects">
@@ -121,6 +133,7 @@
     <object>objects\obj_title</object>
     <object>objects\obj_input</object>
     <object>objects\obj_title_2</object>
+    <object>objects\obj_display</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

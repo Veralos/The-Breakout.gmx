@@ -27,16 +27,43 @@
             <kind>1</kind>
             <string>audio_play_sound(mus_title, 0, true);
 
-option_labels = ds_list_create();
-option_actions = ds_list_create();
-option_selected = 0;
+menu_main = ds_list_create();
+scr_menu_item(menu_main, "Play", scr_play);
+scr_menu_item(menu_main, "Options", scr_options);
+scr_menu_item(menu_main, "Controls", scr_controls);
+scr_menu_item(menu_main, "Quit", scr_quit);
 
-ds_list_add(option_labels, "Play");
-ds_list_add(option_actions, scr_play);
-ds_list_add(option_labels, "Options");
-ds_list_add(option_actions, scr_error);
-ds_list_add(option_labels, "Quit");
-ds_list_add(option_actions, scr_quit);
+menu_options = ds_list_create();
+scr_menu_item_addon(menu_options, "Fullscreen", scr_fullscreen, scr_addon_fullscreen);
+scr_menu_item_addon(menu_options, "Scale", scr_scale, scr_addon_scale);
+scr_menu_item(menu_options, "Sound", scr_error);
+scr_menu_item(menu_options, "Music", scr_error);
+scr_menu_item(menu_options, "Back", scr_back);
+
+menu_controls = ds_list_create();
+scr_menu_item(menu_controls, "Keyboard", scr_keyboard);
+scr_menu_item(menu_controls, "Gamepad", scr_gamepad);
+scr_menu_item(menu_controls, "Back", scr_back);
+
+menu_keyboard = ds_list_create();
+scr_menu_item(menu_keyboard, "Move Up", scr_error);
+scr_menu_item(menu_keyboard, "Move Down", scr_error);
+scr_menu_item(menu_keyboard, "Move Left", scr_error);
+scr_menu_item(menu_keyboard, "Move Right", scr_error);
+scr_menu_item(menu_keyboard, "Hold Ball", scr_error);
+scr_menu_item(menu_keyboard, "Back", scr_back);
+
+menu_gamepad = ds_list_create();
+scr_menu_item(menu_gamepad, "Move Up", scr_error);
+scr_menu_item(menu_gamepad, "Move Down", scr_error);
+scr_menu_item(menu_gamepad, "Move Left", scr_error);
+scr_menu_item(menu_gamepad, "Move Right", scr_error);
+scr_menu_item(menu_gamepad, "Hold Ball", scr_error);
+scr_menu_item(menu_gamepad, "Back", scr_back);
+
+back_stack = ds_stack_create();
+menu = menu_main;
+selected = 0;
 
 animate = 0;
 </string>
@@ -63,23 +90,24 @@ animate = 0;
             <kind>1</kind>
             <string>if (keyboard_check_pressed(vk_up)) {
     audio_play_sound(snd_select, 0, false);
-    option_selected--;
+    selected--;
 }
 if (keyboard_check_pressed(vk_down)) {
     audio_play_sound(snd_select, 0, false);
-    option_selected++;
+    selected++;
 }
 
-if (option_selected &lt; 0) {
-    option_selected = ds_list_size(option_labels) - 1;
+if (selected &lt; 0) {
+    selected = ds_list_size(menu) - 1;
 }
-if (option_selected &gt; ds_list_size(option_labels) - 1) {
-    option_selected = 0;
+if (selected &gt; ds_list_size(menu) - 1) {
+    selected = 0;
 }
 
 if (keyboard_check_pressed(ord('A'))) {
     audio_play_sound(snd_confirm, 0, false);
-    script_execute(ds_list_find_value(option_actions, option_selected));
+    var selection = ds_list_find_value(menu, selected);
+    script_execute(selection[1]);
 }
 
 animate += 0.01;
@@ -129,10 +157,19 @@ draw_text_transformed(room_width * (3 / 8), 48, "The Breakout", 1 + 0.02 * anim,
 
 draw_set_font(fnt_main);
 
-for (var i = 0; i &lt; ds_list_size(option_labels); i++) {
-    draw_text(room_width * (7 / 8), 32 + 32 * i, ds_list_find_value(option_labels, i));
+var selection;
+var label;
+for (var i = 0; i &lt; ds_list_size(menu); i++) {
+    selection = ds_list_find_value(menu, i);
+    draw_set_font(fnt_main);
+    draw_text(room_width * (7 / 8), 40 + 40 * i, selection[0]);
+    if (selection[2] != -1) {
+        draw_set_font(fnt_small);
+        draw_text(room_width * (7 / 8), 40 + 40 * i + 14, script_execute(selection[2]));
+    }
+    
 }
-draw_text(room_width * (7 / 8) - 52 + 2 * anim, 32 + 32 * option_selected, "&gt;");
+draw_text(room_width * (7 / 8) - 52 + 2 * anim, 40 + 40 * selected, "&gt;");
 </string>
           </argument>
         </arguments>
