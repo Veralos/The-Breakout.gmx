@@ -36,8 +36,8 @@ scr_menu_item(menu_main, "Quit", scr_quit);
 menu_options = ds_list_create();
 scr_menu_item_addon(menu_options, "Fullscreen", scr_fullscreen, scr_addon_fullscreen);
 scr_menu_item_addon(menu_options, "Scale", scr_scale, scr_addon_scale);
-scr_menu_item(menu_options, "Sound", scr_error);
-scr_menu_item(menu_options, "Music", scr_error);
+scr_menu_item_addon(menu_options, "Sound", scr_sound, scr_addon_sound);
+scr_menu_item_addon(menu_options, "Music", scr_music, scr_addon_music);
 scr_menu_item(menu_options, "Back", scr_back);
 
 menu_controls = ds_list_create();

@@ -15,17 +15,17 @@
     <sound>sound\snd_attack</sound>
     <sound>sound\snd_free</sound>
     <sound>sound\snd_die</sound>
-    <sound>sound\mus_main</sound>
     <sound>sound\snd_end</sound>
     <sound>sound\snd_end_2</sound>
     <sound>sound\snd_arrow</sound>
     <sound>sound\snd_smash</sound>
-    <sound>sound\mus_end</sound>
-    <sound>sound\mus_title</sound>
     <sound>sound\snd_confirm</sound>
     <sound>sound\snd_select</sound>
     <sound>sound\snd_error</sound>
     <sound>sound\snd_back</sound>
+    <sound>sound\mus_main</sound>
+    <sound>sound\mus_end</sound>
+    <sound>sound\mus_title</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_player</sprite>
@@ -92,7 +92,12 @@
     <script>scripts\scr_menu_item_addon.gml</script>
     <script>scripts\scr_addon_fullscreen.gml</script>
     <script>scripts\scr_addon_scale.gml</script>
+    <script>scripts\scr_addon_sound.gml</script>
+    <script>scripts\scr_addon_music.gml</script>
     <script>scripts\scr_scale.gml</script>
+    <script>scripts\scr_list_gain.gml</script>
+    <script>scripts\scr_sound.gml</script>
+    <script>scripts\scr_music.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
@@ -134,6 +139,7 @@
     <object>objects\obj_input</object>
     <object>objects\obj_title_2</object>
     <object>objects\obj_display</object>
+    <object>objects\obj_audio</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>
