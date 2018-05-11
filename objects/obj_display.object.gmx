@@ -25,10 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scale = 2;
+            <string>scr_open_file();
+fullscreen = ini_read_real("Display", "Fullscreen", false);
+scale = ini_read_real("Display", "Scale", 2);
+ini_close();
+
+window_set_fullscreen(fullscreen);
+
 set_scale = scale;
 width = 512;
 height = 288;
+window_set_size(scale * width, scale * height);
 </string>
           </argument>
         </arguments>
@@ -51,11 +58,21 @@ height = 288;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (scale != set_scale) {
+            <string>if (fullscreen != window_get_fullscreen()) {
+    fullscreen = window_get_fullscreen();
+    scr_open_file();
+    ini_write_real("Display", "Fullscreen", fullscreen);
+    ini_close();
+}
+
+if (scale != set_scale) {
     if (set_scale * width &gt; display_get_width() || set_scale * height &gt; display_get_height()) {
         set_scale = 1;
     }
     scale = set_scale;
+    scr_open_file();
+    ini_write_real("Display", "Scale", scale);
+    ini_close();
     window_set_size(scale * width, scale * height);
 }
 </string>
