@@ -110,6 +110,15 @@ if (keyboard_check_pressed(ord('A'))) {
     script_execute(selection[1]);
 }
 
+if (keyboard_check_pressed(vk_escape)) {
+    if (ds_stack_empty(back_stack)) {
+        game_end();
+    }
+    else {
+        scr_back();
+    }
+}
+
 animate += 0.01;
 if (animate &gt; 1) {
     animate = 0;

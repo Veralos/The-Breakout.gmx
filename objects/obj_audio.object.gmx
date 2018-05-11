@@ -25,8 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sound_gain = 1;
-music_gain = 1;
+            <string>scr_open_file();
+sound_gain = ini_read_real("Audio", "Sound", 1);
+music_gain = ini_read_real("Audio", "Music", 1);
+ini_close();
+
 sound_gain_set = sound_gain;
 music_gain_set = music_gain;
 
@@ -85,6 +88,11 @@ ds_list_add(music_list,
         sound_gain_set = 0;
     }
     sound_gain = sound_gain_set;
+    
+    scr_open_file();
+    ini_write_real("Audio", "Sound", sound_gain);
+    ini_close();
+    
     scr_list_gain(sound_list, sound_gain);
     audio_sound_gain(snd_swing, audio_sound_get_gain(snd_swing) * 0.3, 0);
 }
@@ -94,6 +102,11 @@ if (music_gain != music_gain_set) {
         music_gain_set = 0;
     }
     music_gain = music_gain_set;
+    
+    scr_open_file();
+    ini_write_real("Audio", "Music", music_gain);
+    ini_close();
+    
     scr_list_gain(music_list, music_gain);
 }
 </string>
