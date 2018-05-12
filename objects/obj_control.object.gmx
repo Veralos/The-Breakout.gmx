@@ -100,7 +100,7 @@ if (instance_number(obj_player) &gt; 0) {
         audio_play_sound(snd_back, 0, false);
         room_goto(rm_title_2);
     }
-    else if (obj_input.restart_pressed || hp &lt;= 0) {
+    else if (hp &lt;= 0) {
         audio_pause_sound(mus_main);
         with (obj_player) {
             instance_destroy();

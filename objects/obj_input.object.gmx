@@ -25,14 +25,51 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>move_left = false;
-move_right = false;
-move_up = false;
-move_down = false;
+            <string>move_left_hold = false;
+move_right_hold = false;
+move_up_hold = false;
+move_down_hold = false;
 hold_pressed = false;
-restart_pressed = false;
+
+select_up_pressed = false;
+select_down_pressed = false;
+confirm_pressed = false;
+back_pressed = false;
+
+stick_left = false;
+stick_right = false;
+stick_up = false;
+stick_down = false;
+
+stick_left_pressed = false;
+stick_right_pressed = false;
+stick_up_pressed = false;
+stick_down_pressed = false;
+
 
 gamepad_set_axis_deadzone(0, 0.3);
+
+enum controls {
+    move_left,
+    move_right,
+    move_up,
+    move_down,
+    hold_ball
+}
+
+keyboard_controls = ds_map_create();
+ds_map_add(keyboard_controls, controls.move_left, vk_left);
+ds_map_add(keyboard_controls, controls.move_right, vk_right);
+ds_map_add(keyboard_controls, controls.move_up, vk_up);
+ds_map_add(keyboard_controls, controls.move_down, vk_down);
+ds_map_add(keyboard_controls, controls.hold_ball, ord('A'));
+
+gamepad_controls = ds_map_create();
+ds_map_add(gamepad_controls, controls.move_left, gp_padl);
+ds_map_add(gamepad_controls, controls.move_right, gp_padr);
+ds_map_add(gamepad_controls, controls.move_up, gp_padu);
+ds_map_add(gamepad_controls, controls.move_down, gp_padd);
+ds_map_add(gamepad_controls, controls.hold_ball, gp_face1);
 </string>
           </argument>
         </arguments>
@@ -55,19 +92,89 @@ gamepad_set_axis_deadzone(0, 0.3);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>move_left = false;
-move_right = false;
-move_up = false;
-move_down = false;
-hold_pressed = false;
-restart_pressed = false;
+            <string>//Stick
 
-move_left = keyboard_check(vk_left) || gamepad_axis_value(0, gp_axislh) &lt; 0;
-move_right = keyboard_check(vk_right) || gamepad_axis_value(0, gp_axislh) &gt; 0;
-move_up = keyboard_check(vk_up) || gamepad_axis_value(0, gp_axislv) &lt; 0;
-move_down = keyboard_check(vk_down) || gamepad_axis_value(0, gp_axislv) &gt; 0;
-hold_pressed = keyboard_check_pressed(ord('A')) || keyboard_check_pressed(ord('Q')) || gamepad_button_check_pressed(0, gp_face1);
-restart_pressed = keyboard_check_pressed(ord('R')) || gamepad_button_check_pressed(0, gp_face2);
+stick_left_pressed = false;
+stick_right_pressed = false;
+stick_up_pressed = false;
+stick_down_pressed = false;
+
+if (gamepad_axis_value(0, gp_axislh) &lt; 0) {
+    stick_left_pressed = !stick_left;
+    stick_left = true;
+}
+else {
+    stick_left = false;
+}
+if (gamepad_axis_value(0, gp_axislh) &gt; 0) {
+    stick_right_pressed = !stick_right;
+    stick_right = true;
+}
+else {
+    stick_right = false;
+}
+if (gamepad_axis_value(0, gp_axislv) &lt; 0) {
+    stick_up_pressed = !stick_up;
+    stick_up = true;
+}
+else {
+    stick_up = false;
+}
+if (gamepad_axis_value(0, gp_axislv) &gt; 0) {
+    stick_down_pressed = !stick_down;
+    stick_down = true;
+}
+else {
+    stick_down = false;
+}
+
+//Player Controls
+
+move_left_hold = false;
+move_right_hold = false;
+move_up_hold = false;
+move_down_hold = false;
+hold_pressed = false;
+
+move_left_hold = 
+    keyboard_check(ds_map_find_value(keyboard_controls, controls.move_left)) ||
+    gamepad_button_check(0, ds_map_find_value(gamepad_controls, controls.move_left)) ||
+    stick_left;
+move_right_hold = 
+    keyboard_check(ds_map_find_value(keyboard_controls, controls.move_right)) ||
+    gamepad_button_check(0, ds_map_find_value(gamepad_controls, controls.move_right)) ||
+    stick_right;
+move_up_hold = 
+    keyboard_check(ds_map_find_value(keyboard_controls, controls.move_up)) ||
+    gamepad_button_check(0, ds_map_find_value(gamepad_controls, controls.move_up)) ||
+    stick_up;
+move_down_hold = 
+    keyboard_check(ds_map_find_value(keyboard_controls, controls.move_down)) ||
+    gamepad_button_check(0, ds_map_find_value(gamepad_controls, controls.move_down)) ||
+    stick_down;
+hold_pressed = 
+    keyboard_check_pressed(ds_map_find_value(keyboard_controls, controls.hold_ball)) || 
+    gamepad_button_check_pressed(0, ds_map_find_value(gamepad_controls, controls.hold_ball));
+
+//Menu Controls
+
+select_up_pressed = false;
+select_down_pressed = false;
+confirm_pressed = false;
+back_pressed = false;
+        
+select_up_pressed =
+    keyboard_check_pressed(vk_up) ||
+    stick_up_pressed;
+select_down_pressed =
+    keyboard_check_pressed(vk_down) ||
+    stick_down_pressed;
+confirm_pressed = 
+    keyboard_check_pressed(ord('A')) ||
+    gamepad_button_check_pressed(0, gp_face1);
+back_pressed = 
+    keyboard_check_pressed(vk_escape) ||
+    gamepad_button_check_pressed(0, gp_face2);
 </string>
           </argument>
         </arguments>

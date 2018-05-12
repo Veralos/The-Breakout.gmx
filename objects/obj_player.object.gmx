@@ -100,16 +100,16 @@ else {
     visible = true;
 }
 
-if (obj_input.move_left) {
+if (obj_input.move_left_hold) {
     speed_x -= accel;
 }
-if (obj_input.move_right) {
+if (obj_input.move_right_hold) {
     speed_x += accel;
 }
-if (obj_input.move_up) {
+if (obj_input.move_up_hold) {
     speed_y -= accel;
 }
-if (obj_input.move_down) {
+if (obj_input.move_down_hold) {
     speed_y += accel;
 }
 

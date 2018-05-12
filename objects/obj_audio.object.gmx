@@ -61,6 +61,9 @@ ds_list_add(music_list,
     mus_end,
     mus_title
 );
+
+scr_list_gain(sound_list, sound_gain);
+scr_list_gain(music_list, music_gain);
 </string>
           </argument>
         </arguments>
