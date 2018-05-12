@@ -70,6 +70,9 @@ ds_map_add(gamepad_controls, controls.move_right, gp_padr);
 ds_map_add(gamepad_controls, controls.move_up, gp_padu);
 ds_map_add(gamepad_controls, controls.move_down, gp_padd);
 ds_map_add(gamepad_controls, controls.hold_ball, gp_face1);
+
+keys = scr_generate_key_labels();
+buttons = scr_generate_gamepad_labels();
 </string>
           </argument>
         </arguments>

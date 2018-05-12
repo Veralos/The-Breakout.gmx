@@ -1,3 +1,4 @@
+ds_stack_push(menu_stack, menu);
+ds_stack_push(selected_stack, selected);
 selected = 0;
-ds_stack_push(back_stack, menu);
 menu = menu_keyboard;

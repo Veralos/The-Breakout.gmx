@@ -46,22 +46,43 @@ scr_menu_item(menu_controls, "Gamepad", scr_gamepad);
 scr_menu_item(menu_controls, "Back", scr_back);
 
 menu_keyboard = ds_list_create();
-scr_menu_item(menu_keyboard, "Move Up", scr_error);
-scr_menu_item(menu_keyboard, "Move Down", scr_error);
-scr_menu_item(menu_keyboard, "Move Left", scr_error);
-scr_menu_item(menu_keyboard, "Move Right", scr_error);
-scr_menu_item(menu_keyboard, "Hold Ball", scr_error);
+scr_menu_item_addon_arg(menu_keyboard, "Move Left", scr_error, scr_addon_keyboard, 
+    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.move_left)
+);
+scr_menu_item_addon_arg(menu_keyboard, "Move Right", scr_error, scr_addon_keyboard, 
+    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.move_right)
+);
+scr_menu_item_addon_arg(menu_keyboard, "Move Up", scr_error, scr_addon_keyboard, 
+    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.move_up)
+);
+scr_menu_item_addon_arg(menu_keyboard, "Move Down", scr_error, scr_addon_keyboard, 
+    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.move_down)
+);
+scr_menu_item_addon_arg(menu_keyboard, "Hold Ball", scr_error, scr_addon_keyboard, 
+    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.hold_ball)
+);
 scr_menu_item(menu_keyboard, "Back", scr_back);
 
 menu_gamepad = ds_list_create();
-scr_menu_item(menu_gamepad, "Move Up", scr_error);
-scr_menu_item(menu_gamepad, "Move Down", scr_error);
-scr_menu_item(menu_gamepad, "Move Left", scr_error);
-scr_menu_item(menu_gamepad, "Move Right", scr_error);
-scr_menu_item(menu_gamepad, "Hold Ball", scr_error);
+scr_menu_item_addon_arg(menu_gamepad, "Move Left", scr_error, scr_addon_gamepad, 
+    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.move_left)
+);
+scr_menu_item_addon_arg(menu_gamepad, "Move Right", scr_error, scr_addon_gamepad, 
+    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.move_right)
+);
+scr_menu_item_addon_arg(menu_gamepad, "Move Up", scr_error, scr_addon_gamepad, 
+    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.move_up)
+);
+scr_menu_item_addon_arg(menu_gamepad, "Move Down", scr_error, scr_addon_gamepad, 
+    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.move_down)
+);
+scr_menu_item_addon_arg(menu_gamepad, "Hold Ball", scr_error, scr_addon_gamepad, 
+    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.hold_ball)
+);
 scr_menu_item(menu_gamepad, "Back", scr_back);
 
-back_stack = ds_stack_create();
+menu_stack = ds_stack_create();
+selected_stack = ds_stack_create();
 menu = menu_main;
 selected = 0;
 
@@ -111,7 +132,7 @@ if (obj_input.confirm_pressed) {
 }
 
 if (obj_input.back_pressed) {
-    if (ds_stack_empty(back_stack)) {
+    if (ds_stack_empty(menu_stack)) {
         game_end();
     }
     else {
@@ -168,13 +189,20 @@ draw_set_font(fnt_main);
 
 var selection;
 var label;
+var addon;
 for (var i = 0; i &lt; ds_list_size(menu); i++) {
     selection = ds_list_find_value(menu, i);
     draw_set_font(fnt_main);
     draw_text(room_width * (7 / 8), 40 + 40 * i, selection[0]);
     if (selection[2] != -1) {
+        if (selection[3] != -1) {
+            addon = script_execute(selection[2], selection[3]);
+        }
+        else {
+            addon = script_execute(selection[2]); 
+        }
         draw_set_font(fnt_small);
-        draw_text(room_width * (7 / 8), 40 + 40 * i + 14, script_execute(selection[2]));
+        draw_text(room_width * (7 / 8), 40 + 40 * i + 14, addon);
     }
     
 }

@@ -79,26 +79,35 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\scr_play.gml</script>
-    <script>scripts\scr_quit.gml</script>
-    <script>scripts\scr_options.gml</script>
-    <script>scripts\scr_controls.gml</script>
-    <script>scripts\scr_keyboard.gml</script>
-    <script>scripts\scr_gamepad.gml</script>
-    <script>scripts\scr_back.gml</script>
-    <script>scripts\scr_fullscreen.gml</script>
-    <script>scripts\scr_error.gml</script>
-    <script>scripts\scr_menu_item.gml</script>
-    <script>scripts\scr_menu_item_addon.gml</script>
-    <script>scripts\scr_addon_fullscreen.gml</script>
-    <script>scripts\scr_addon_scale.gml</script>
-    <script>scripts\scr_addon_sound.gml</script>
-    <script>scripts\scr_addon_music.gml</script>
-    <script>scripts\scr_scale.gml</script>
+    <scripts name="menu">
+      <script>scripts\scr_menu_item.gml</script>
+      <script>scripts\scr_menu_item_addon.gml</script>
+      <script>scripts\scr_menu_item_addon_arg.gml</script>
+      <script>scripts\scr_play.gml</script>
+      <script>scripts\scr_quit.gml</script>
+      <script>scripts\scr_options.gml</script>
+      <script>scripts\scr_controls.gml</script>
+      <script>scripts\scr_keyboard.gml</script>
+      <script>scripts\scr_back.gml</script>
+      <script>scripts\scr_fullscreen.gml</script>
+      <script>scripts\scr_error.gml</script>
+      <script>scripts\scr_gamepad.gml</script>
+      <script>scripts\scr_scale.gml</script>
+      <script>scripts\scr_sound.gml</script>
+      <script>scripts\scr_music.gml</script>
+    </scripts>
+    <scripts name="addon">
+      <script>scripts\scr_addon_fullscreen.gml</script>
+      <script>scripts\scr_addon_scale.gml</script>
+      <script>scripts\scr_addon_sound.gml</script>
+      <script>scripts\scr_addon_music.gml</script>
+      <script>scripts\scr_addon_keyboard.gml</script>
+      <script>scripts\scr_addon_gamepad.gml</script>
+    </scripts>
     <script>scripts\scr_list_gain.gml</script>
-    <script>scripts\scr_sound.gml</script>
-    <script>scripts\scr_music.gml</script>
     <script>scripts\scr_open_file.gml</script>
+    <script>scripts\scr_generate_gamepad_labels.gml</script>
+    <script>scripts\scr_generate_key_labels.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
