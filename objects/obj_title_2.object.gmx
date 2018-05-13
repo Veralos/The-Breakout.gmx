@@ -46,40 +46,47 @@ scr_menu_item(menu_controls, "Gamepad", scr_gamepad);
 scr_menu_item(menu_controls, "Back", scr_back);
 
 menu_keyboard = ds_list_create();
-scr_menu_item_addon_arg(menu_keyboard, "Move Left", scr_error, scr_addon_keyboard, 
-    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.move_left)
+scr_menu_item_addon_arg(menu_keyboard, "Move Left", scr_rebind_keyboard, scr_addon_keyboard, 
+    obj_input.controls.move_left
 );
-scr_menu_item_addon_arg(menu_keyboard, "Move Right", scr_error, scr_addon_keyboard, 
-    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.move_right)
+scr_menu_item_addon_arg(menu_keyboard, "Move Right", scr_rebind_keyboard, scr_addon_keyboard, 
+    obj_input.controls.move_right
 );
-scr_menu_item_addon_arg(menu_keyboard, "Move Up", scr_error, scr_addon_keyboard, 
-    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.move_up)
+scr_menu_item_addon_arg(menu_keyboard, "Move Up", scr_rebind_keyboard, scr_addon_keyboard, 
+    obj_input.controls.move_up
 );
-scr_menu_item_addon_arg(menu_keyboard, "Move Down", scr_error, scr_addon_keyboard, 
-    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.move_down)
+scr_menu_item_addon_arg(menu_keyboard, "Move Down", scr_rebind_keyboard, scr_addon_keyboard, 
+    obj_input.controls.move_down
 );
-scr_menu_item_addon_arg(menu_keyboard, "Hold Ball", scr_error, scr_addon_keyboard, 
-    ds_map_find_value(obj_input.keyboard_controls, obj_input.controls.hold_ball)
+scr_menu_item_addon_arg(menu_keyboard, "Hold Ball", scr_rebind_keyboard, scr_addon_keyboard, 
+    obj_input.controls.hold_ball
 );
 scr_menu_item(menu_keyboard, "Back", scr_back);
 
 menu_gamepad = ds_list_create();
 scr_menu_item_addon_arg(menu_gamepad, "Move Left", scr_error, scr_addon_gamepad, 
-    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.move_left)
+    obj_input.controls.move_left
 );
 scr_menu_item_addon_arg(menu_gamepad, "Move Right", scr_error, scr_addon_gamepad, 
-    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.move_right)
+    obj_input.controls.move_right
 );
 scr_menu_item_addon_arg(menu_gamepad, "Move Up", scr_error, scr_addon_gamepad, 
-    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.move_up)
+    obj_input.controls.move_up
 );
 scr_menu_item_addon_arg(menu_gamepad, "Move Down", scr_error, scr_addon_gamepad, 
-    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.move_down)
+    obj_input.controls.move_down
 );
 scr_menu_item_addon_arg(menu_gamepad, "Hold Ball", scr_error, scr_addon_gamepad, 
-    ds_map_find_value(obj_input.gamepad_controls, obj_input.controls.hold_ball)
+    obj_input.controls.hold_ball
 );
 scr_menu_item(menu_gamepad, "Back", scr_back);
+
+rebind = false;
+rebind_label = "";
+rebind_control = -1;
+rebind_keyboard = true;
+rebind_error = "";
+rebind_error_time = 0;
 
 menu_stack = ds_stack_create();
 selected_stack = ds_stack_create();
@@ -109,34 +116,68 @@ animate = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (obj_input.select_up_pressed) {
-    audio_play_sound(snd_select, 0, false);
-    selected--;
-}
-if (obj_input.select_down_pressed) {
-    audio_play_sound(snd_select, 0, false);
-    selected++;
-}
-
-if (selected &lt; 0) {
-    selected = ds_list_size(menu) - 1;
-}
-if (selected &gt; ds_list_size(menu) - 1) {
-    selected = 0;
-}
-
-if (obj_input.confirm_pressed) {
-    audio_play_sound(snd_confirm, 0, false);
-    var selection = ds_list_find_value(menu, selected);
-    script_execute(selection[1]);
-}
-
-if (obj_input.back_pressed) {
-    if (ds_stack_empty(menu_stack)) {
-        game_end();
+            <string>if (rebind) {
+    if (rebind_error_time &gt; 0) {
+        rebind_error_time--;
     }
-    else {
-        scr_back();
+
+    if (keyboard_check_pressed(vk_anykey)) {
+        if (keyboard_key = vk_escape) {
+            rebind = false;
+        }
+        else if(ds_map_exists(obj_input.keys, keyboard_key)) {
+            if (!scr_map_value_exists(obj_input.keyboard_controls, keyboard_key)) {
+                ds_map_replace(obj_input.keyboard_controls, rebind_control, keyboard_key);
+                rebind = false;
+            }
+            else {
+                rebind_error = "Key is already in use";
+                rebind_error_time = 60;
+            }
+        }
+        else {
+            rebind_error = "Key is not supported";
+            rebind_error_time = 60;
+        }
+    }
+}
+else {
+    rebind_error_time = 0;
+
+    if (obj_input.select_up_pressed) {
+        audio_play_sound(snd_select, 0, false);
+        selected--;
+    }
+    if (obj_input.select_down_pressed) {
+        audio_play_sound(snd_select, 0, false);
+        selected++;
+    }
+    
+    if (selected &lt; 0) {
+        selected = ds_list_size(menu) - 1;
+    }
+    if (selected &gt; ds_list_size(menu) - 1) {
+        selected = 0;
+    }
+    
+    if (obj_input.confirm_pressed) {
+        audio_play_sound(snd_confirm, 0, false);
+        var selection = ds_list_find_value(menu, selected);
+        if (selection[3] == -1) {
+            script_execute(selection[1]);
+        }
+        else {
+            script_execute(selection[1], selection[0], selection[3]);
+        }
+    }
+    
+    if (obj_input.back_pressed) {
+        if (ds_stack_empty(menu_stack)) {
+            game_end();
+        }
+        else {
+            scr_back();
+        }
     }
 }
 
@@ -207,6 +248,23 @@ for (var i = 0; i &lt; ds_list_size(menu); i++) {
     
 }
 draw_text(room_width * (7 / 8) - 52 + 2 * anim, 40 + 40 * selected, "&gt;");
+
+if (rebind) {
+    draw_set_alpha(0.75);
+    draw_set_color(c_black);
+    draw_rectangle(0, y, room_width, room_height, false);
+    
+    draw_set_alpha(1);
+    draw_set_color(c_white);
+    draw_set_font(fnt_main);
+    draw_text(room_width / 2, room_height * (1 / 4), "Press new " + rebind_label + " key" );
+    draw_text(room_width / 2, room_height * (3 / 4), "Press Escape to cancel");
+    
+    if (rebind_error_time &gt; 0) {
+        draw_set_color(c_red);
+        draw_text(room_width / 2, room_height * (2 / 4), rebind_error);
+    }
+}
 </string>
           </argument>
         </arguments>
