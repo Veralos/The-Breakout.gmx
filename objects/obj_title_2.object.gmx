@@ -64,19 +64,19 @@ scr_menu_item_addon_arg(menu_keyboard, "Hold Ball", scr_rebind_keyboard, scr_add
 scr_menu_item(menu_keyboard, "Back", scr_back);
 
 menu_gamepad = ds_list_create();
-scr_menu_item_addon_arg(menu_gamepad, "Move Left", scr_error, scr_addon_gamepad, 
+scr_menu_item_addon_arg(menu_gamepad, "Move Left", scr_rebind_gamepad, scr_addon_gamepad, 
     obj_input.controls.move_left
 );
-scr_menu_item_addon_arg(menu_gamepad, "Move Right", scr_error, scr_addon_gamepad, 
+scr_menu_item_addon_arg(menu_gamepad, "Move Right", scr_rebind_gamepad, scr_addon_gamepad, 
     obj_input.controls.move_right
 );
-scr_menu_item_addon_arg(menu_gamepad, "Move Up", scr_error, scr_addon_gamepad, 
+scr_menu_item_addon_arg(menu_gamepad, "Move Up", scr_rebind_gamepad, scr_addon_gamepad, 
     obj_input.controls.move_up
 );
-scr_menu_item_addon_arg(menu_gamepad, "Move Down", scr_error, scr_addon_gamepad, 
+scr_menu_item_addon_arg(menu_gamepad, "Move Down", scr_rebind_gamepad, scr_addon_gamepad, 
     obj_input.controls.move_down
 );
-scr_menu_item_addon_arg(menu_gamepad, "Hold Ball", scr_error, scr_addon_gamepad, 
+scr_menu_item_addon_arg(menu_gamepad, "Hold Ball", scr_rebind_gamepad, scr_addon_gamepad, 
     obj_input.controls.hold_ball
 );
 scr_menu_item(menu_gamepad, "Back", scr_back);
@@ -121,23 +121,55 @@ animate = 0;
         rebind_error_time--;
     }
 
-    if (keyboard_check_pressed(vk_anykey)) {
-        if (keyboard_key = vk_escape) {
-            rebind = false;
-        }
-        else if(ds_map_exists(obj_input.keys, keyboard_key)) {
-            if (!scr_map_value_exists(obj_input.keyboard_controls, keyboard_key)) {
-                ds_map_replace(obj_input.keyboard_controls, rebind_control, keyboard_key);
+    if (rebind_keyboard) {
+        if (keyboard_check_pressed(vk_anykey)) {
+            if (keyboard_key = vk_escape) {
+                audio_play_sound(snd_back, 0, false);
                 rebind = false;
             }
+            else if(ds_map_exists(obj_input.keys, keyboard_key)) {
+                if (!scr_map_value_exists(obj_input.keyboard_controls, keyboard_key)) {
+                    audio_play_sound(snd_confirm, 0, false);
+                    ds_map_replace(obj_input.keyboard_controls, rebind_control, keyboard_key);
+                    rebind = false;
+                }
+                else {
+                    audio_play_sound(snd_error, 0, false);
+                    rebind_error = "Key is already in use";
+                    rebind_error_time = 60;
+                }
+            }
             else {
-                rebind_error = "Key is already in use";
+                audio_play_sound(snd_error, 0, false);
+                rebind_error = "Key is not supported";
                 rebind_error_time = 60;
             }
         }
-        else {
-            rebind_error = "Key is not supported";
-            rebind_error_time = 60;
+    }
+    else {
+        var button = scr_check_gamepad_buttons();
+        if (keyboard_check_pressed(vk_escape) || gamepad_button_check_pressed(0, gp_start)) {
+            audio_play_sound(snd_back, 0, false);
+            rebind = false;
+        }
+        else if (!is_undefined(button)) {
+            if(ds_map_exists(obj_input.buttons, button)) {
+                if (!scr_map_value_exists(obj_input.gamepad_controls, button)) {
+                    audio_play_sound(snd_confirm, 0, false);
+                    ds_map_replace(obj_input.gamepad_controls, rebind_control, button);
+                    rebind = false;
+                }
+                else {
+                    audio_play_sound(snd_error, 0, false);
+                    rebind_error = "Button is already in use";
+                    rebind_error_time = 60;
+                }
+            }
+            else {
+                audio_play_sound(snd_error, 0, false);
+                rebind_error = "Button is not supported";
+                rebind_error_time = 60;
+            }
         }
     }
 }
@@ -257,8 +289,14 @@ if (rebind) {
     draw_set_alpha(1);
     draw_set_color(c_white);
     draw_set_font(fnt_main);
-    draw_text(room_width / 2, room_height * (1 / 4), "Press new " + rebind_label + " key" );
-    draw_text(room_width / 2, room_height * (3 / 4), "Press Escape to cancel");
+    if (rebind_keyboard) {
+        draw_text(room_width / 2, room_height * (1 / 4), "Press new " + rebind_label + " key" );
+        draw_text(room_width / 2, room_height * (3 / 4), "Press Escape to cancel");
+    }
+    else {
+        draw_text(room_width / 2, room_height * (1 / 4), "Press new " + rebind_label + " button" );
+        draw_text(room_width / 2, room_height * (3 / 4), "Press Start (or Escape) to cancel");
+    }
     
     if (rebind_error_time &gt; 0) {
         draw_set_color(c_red);

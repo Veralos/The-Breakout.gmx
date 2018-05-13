@@ -111,8 +111,8 @@
     <script>scripts\scr_generate_gamepad_labels.gml</script>
     <script>scripts\scr_generate_key_labels.gml</script>
     <script>scripts\scr_map_value_exists.gml</script>
+    <script>scripts\scr_check_gamepad_buttons.gml</script>
   </scripts>
-  <shaders name="shaders"/>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
     <font>fonts\fnt_small</font>
