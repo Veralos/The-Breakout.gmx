@@ -131,6 +131,9 @@ animate = 0;
                 if (!scr_map_value_exists(obj_input.keyboard_controls, keyboard_key)) {
                     audio_play_sound(snd_confirm, 0, false);
                     ds_map_replace(obj_input.keyboard_controls, rebind_control, keyboard_key);
+                    scr_open_file();
+                    ini_write_real("Keyboard", rebind_control, keyboard_key);
+                    ini_close();
                     rebind = false;
                 }
                 else {
@@ -158,6 +161,9 @@ animate = 0;
                     audio_play_sound(snd_confirm, 0, false);
                     ds_map_replace(obj_input.gamepad_controls, rebind_control, button);
                     rebind = false;
+                    scr_open_file();
+                    ini_write_real("Gamepad", rebind_control, button);
+                    ini_close();
                 }
                 else {
                     audio_play_sound(snd_error, 0, false);

@@ -57,19 +57,33 @@ enum controls {
     hold_ball
 }
 
+scr_open_file();
+
 keyboard_controls = ds_map_create();
-ds_map_add(keyboard_controls, controls.move_left, vk_left);
-ds_map_add(keyboard_controls, controls.move_right, vk_right);
-ds_map_add(keyboard_controls, controls.move_up, vk_up);
-ds_map_add(keyboard_controls, controls.move_down, vk_down);
-ds_map_add(keyboard_controls, controls.hold_ball, ord('A'));
+ds_map_add(keyboard_controls, controls.move_left, 
+    ini_read_real("Keyboard", controls.move_left, vk_left));
+ds_map_add(keyboard_controls, controls.move_right, 
+    ini_read_real("Keyboard", controls.move_right, vk_right));
+ds_map_add(keyboard_controls, controls.move_up, 
+    ini_read_real("Keyboard", controls.move_up, vk_up));
+ds_map_add(keyboard_controls, controls.move_down, 
+    ini_read_real("Keyboard", controls.move_down, vk_down));
+ds_map_add(keyboard_controls, controls.hold_ball, 
+    ini_read_real("Keyboard", controls.hold_ball, ord('A')));
 
 gamepad_controls = ds_map_create();
-ds_map_add(gamepad_controls, controls.move_left, gp_padl);
-ds_map_add(gamepad_controls, controls.move_right, gp_padr);
-ds_map_add(gamepad_controls, controls.move_up, gp_padu);
-ds_map_add(gamepad_controls, controls.move_down, gp_padd);
-ds_map_add(gamepad_controls, controls.hold_ball, gp_face1);
+ds_map_add(gamepad_controls, controls.move_left, 
+    ini_read_real("Gamepad", controls.move_left, gp_padl));
+ds_map_add(gamepad_controls, controls.move_right, 
+    ini_read_real("Gamepad", controls.move_right, gp_padr));
+ds_map_add(gamepad_controls, controls.move_up, 
+    ini_read_real("Gamepad", controls.move_up, gp_padu));
+ds_map_add(gamepad_controls, controls.move_down, 
+    ini_read_real("Gamepad", controls.move_down, gp_padd));
+ds_map_add(gamepad_controls, controls.hold_ball, 
+    ini_read_real("Gamepad", controls.hold_ball, gp_face1));
+
+ini_close();
 
 keys = scr_generate_key_labels();
 buttons = scr_generate_gamepad_labels();
@@ -168,9 +182,11 @@ back_pressed = false;
         
 select_up_pressed =
     keyboard_check_pressed(vk_up) ||
+    gamepad_button_check_pressed(0, gp_padu) ||
     stick_up_pressed;
 select_down_pressed =
     keyboard_check_pressed(vk_down) ||
+    gamepad_button_check_pressed(0, gp_padd) ||
     stick_down_pressed;
 confirm_pressed = 
     keyboard_check_pressed(ord('A')) ||
