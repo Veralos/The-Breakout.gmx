@@ -32,10 +32,15 @@ scr_menu_item(menu_main, "Controls", scr_controls);
 scr_menu_item(menu_main, "Quit", scr_quit);
 
 menu_play = ds_list_create();
-for (var i = 0; i &lt; 15; i++) {
-    scr_menu_item_addon_arg(menu_play, "Level " + string(i+1), scr_level, -1, i);
+var size = ds_list_size(obj_levels.levels)
+var level_text;
+for (var i = 0; i &lt; size; i++) {
+    level_text = "Level " + string(i+1);
+    if (i == size - 1) {
+        level_text = "The End";
+    }
+    scr_menu_item_addon_arg(menu_play, level_text, scr_level, -1, i);
 }
-scr_menu_item(menu_play, "The End", scr_error);
 scr_menu_item(menu_play, "Back", scr_back);
 
 menu_options = ds_list_create();

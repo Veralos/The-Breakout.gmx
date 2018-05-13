@@ -42,7 +42,8 @@ ds_list_add(levels,
     rm_backtrack,
     rm_arena,
     rm_fight,
-    rm_final
+    rm_final,
+    rm_end
 );
 </string>
           </argument>
