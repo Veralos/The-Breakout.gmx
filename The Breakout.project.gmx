@@ -84,6 +84,7 @@
       <script>scripts\scr_menu_item_addon.gml</script>
       <script>scripts\scr_menu_item_addon_arg.gml</script>
       <script>scripts\scr_play.gml</script>
+      <script>scripts\scr_level.gml</script>
       <script>scripts\scr_quit.gml</script>
       <script>scripts\scr_options.gml</script>
       <script>scripts\scr_controls.gml</script>
@@ -112,6 +113,7 @@
     <script>scripts\scr_generate_key_labels.gml</script>
     <script>scripts\scr_map_value_exists.gml</script>
     <script>scripts\scr_check_gamepad_buttons.gml</script>
+    <script>scripts\scr_end.gml</script>
   </scripts>
   <shaders name="shaders"/>
   <fonts name="fonts">
@@ -155,6 +157,7 @@
     <object>objects\obj_title_2</object>
     <object>objects\obj_display</object>
     <object>objects\obj_audio</object>
+    <object>objects\obj_levels</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

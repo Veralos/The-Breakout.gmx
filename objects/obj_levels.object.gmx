@@ -4,11 +4,11 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="7" enumb="2">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,13 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>randomize();
-surface_resize(application_surface, 512, 288);
-instance_create(0, 0, obj_input);
-instance_create(0, 0, obj_display);
-instance_create(0, 0, obj_audio);
-instance_create(0, 0, obj_levels);
-room_goto_next();
+            <string>level = 0;
+levels = ds_list_create();
+ds_list_add(levels,
+    rm_begin,
+    rm_start,
+    rm_guard,
+    rm_test,
+    rm_bigger,
+    rm_orb_intro,
+    rm_chambers,
+    rm_wide,
+    rm_archer,
+    rm_bow,
+    rm_orb,
+    rm_backtrack,
+    rm_arena,
+    rm_fight,
+    rm_final
+);
 </string>
           </argument>
         </arguments>

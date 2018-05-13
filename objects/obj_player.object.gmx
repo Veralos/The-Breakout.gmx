@@ -217,7 +217,8 @@ else {
             <string>if (instance_number(obj_elf) &lt;= 0) {
     audio_play_sound(snd_end, 0, false);
     audio_play_sound(snd_end_2, 0, false);
-    room_goto_next();
+    obj_levels.level++;
+    room_goto(ds_list_find_value(obj_levels.levels, obj_levels.level));
 }
 else {
     obj_control.message = 2;
