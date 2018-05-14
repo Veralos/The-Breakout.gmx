@@ -29,6 +29,9 @@
 message = 0;
 hurt = false;
 
+view_xview[0] = obj_player.x - view_wview[0] / 2;
+view_yview[0] = obj_player.y - view_hview[0] / 2;
+
 instance_create(0, 0, obj_background);
 if (instance_number(obj_first_room) &lt; 1) {
     instance_create(obj_player.x, obj_player.y, obj_start_stairs);
@@ -92,8 +95,25 @@ else {
 room_speed = 60;
 
 if (instance_number(obj_player) &gt; 0) {
-    view_xview[0] = obj_player.x - view_wview[0] / 2;
-    view_yview[0] = obj_player.y - view_hview[0] / 2;
+    var hborder = 16;
+    var vborder = 16;
+    var vx = view_xview[0];
+    var vy = view_yview[0];
+    var vw = view_wview[0];
+    var vh = view_hview[0];
+    
+    if (obj_player.x &gt; vx + vw / 2 + hborder) {
+        view_xview[0] = lerp(view_xview[0], obj_player.x - vw / 2 - hborder, 0.5);
+    }
+    if (obj_player.x &lt; vx + vw / 2 - hborder) {
+        view_xview[0] = lerp(view_xview[0], obj_player.x - vw / 2 + hborder, 0.5);
+    }
+    if (obj_player.y &gt; vy + vh / 2 + vborder) {
+        view_yview[0] = lerp(view_yview[0], obj_player.y - vh / 2 - vborder, 0.5);
+    }
+    if (obj_player.y &lt; vy + vh / 2 - vborder) {
+        view_yview[0] = lerp(view_yview[0], obj_player.y - vh / 2 + vborder, 0.5);
+    }
     
     if (keyboard_check_pressed(vk_escape)) {
         audio_stop_sound(mus_main);
