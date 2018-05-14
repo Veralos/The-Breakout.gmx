@@ -32,14 +32,8 @@ scr_menu_item(menu_main, "Controls", scr_controls);
 scr_menu_item(menu_main, "Quit", scr_quit);
 
 menu_play = ds_list_create();
-var size = ds_list_size(obj_levels.levels)
-var level_text;
-for (var i = 0; i &lt; size; i++) {
-    level_text = "Level " + string(i+1);
-    if (i == size - 1) {
-        level_text = "The End";
-    }
-    scr_menu_item_addon_arg(menu_play, level_text, scr_level, -1, i);
+for (var i = 0; i &lt; ds_list_size(obj_levels.levels); i++) {
+    scr_menu_item_addon_arg(menu_play, "---", scr_level, -1, i);
 }
 scr_menu_item(menu_play, "Back", scr_back);
 
@@ -258,6 +252,18 @@ if (animate &gt; 1) {
             <string>audio_play_sound(mus_title, 0, true);
 if (menu == menu_play) {
     selected = obj_levels.level;
+}
+
+var level_text;
+var item;
+for (var i = 0; i &lt;= obj_levels.levels_unlocked; i++) {
+    level_text = "Level " + string(i+1);
+    if (i == ds_list_size(obj_levels.levels) - 1) {
+        level_text = "The End";
+    }
+    var item = ds_list_find_value(menu_play, i);
+    item[0] = level_text;
+    ds_list_replace(menu_play, i, item);
 }
 </string>
           </argument>
