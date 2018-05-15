@@ -48,10 +48,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (spd &lt; 8) {
-    spd += 0.5;
+            <string>if (!obj_control.paused) {
+    if (spd &lt; 8) {
+        spd += 0.5;
+    }
+    y -= spd;
 }
-y -= spd;
 </string>
           </argument>
         </arguments>

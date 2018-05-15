@@ -81,7 +81,7 @@ dead.sprite_index = spr_guard_dead;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_number(obj_player) &gt; 0) {
+            <string>if (instance_number(obj_player) &gt; 0 &amp;&amp; !obj_control.paused) {
 
     if (y &gt; obj_player.y) {
         depth = -5;

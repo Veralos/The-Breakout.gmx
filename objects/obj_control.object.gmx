@@ -28,6 +28,10 @@
             <string>hp = 1;
 message = 0;
 hurt = false;
+paused = false;
+
+hold_dir = 0;
+hold_spd = 0;
 
 view_xview[0] = obj_player.x - view_wview[0] / 2;
 view_yview[0] = obj_player.y - view_hview[0] / 2;
@@ -116,9 +120,18 @@ if (instance_number(obj_player) &gt; 0) {
     }
     
     if (keyboard_check_pressed(vk_escape)) {
-        audio_stop_sound(mus_main);
-        audio_play_sound(snd_back, 0, false);
-        room_goto(rm_title_2);
+        //audio_stop_sound(mus_main);
+        //audio_play_sound(snd_back, 0, false);
+        //room_goto(rm_title_2);
+        paused = !paused;
+        if (paused) {
+            hold_spd = obj_bad.speed;
+            hold_dir = obj_bad.direction;
+        }
+        else {
+            obj_bad.speed = hold_spd;
+            obj_bad.direction = hold_dir;
+        }
     }
     else if (hp &lt;= 0) {
         audio_pause_sound(mus_main);

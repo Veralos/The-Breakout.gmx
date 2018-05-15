@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>direction = random(360);
 speed = 2 + random(1);
+spd = speed;
 image_speed = 0;
 image_angle = random(360);
 image_alpha = 2;
@@ -52,9 +53,15 @@ image_alpha = 2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_alpha -= 0.1;
-if (image_alpha &lt; 0) {
-    instance_destroy();
+            <string>if (!obj_control.paused) {
+    speed = spd;
+    image_alpha -= 0.1;
+    if (image_alpha &lt; 0) {
+        instance_destroy();
+    }
+}
+else {
+    speed = 0;
 }
 </string>
           </argument>

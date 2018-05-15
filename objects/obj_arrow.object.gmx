@@ -25,7 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>mask_index = spr_guard;
+            <string>if (obj_control.paused) {
+    speed = 0;
+} else {
+    speed = 4;
+}
+
+mask_index = spr_guard;
 if (place_meeting(x, y, obj_bad)) {
     if (obj_bad.speed &gt; 5) {
         var part = instance_create(x, y, obj_part);

@@ -92,81 +92,83 @@ instance_create(x, y, obj_dead);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (inv &gt; 0) {
-    inv --;
-    visible = !visible;
-}
-else {
-    visible = true;
-}
-
-if (obj_input.move_left_hold) {
-    speed_x -= accel;
-}
-if (obj_input.move_right_hold) {
-    speed_x += accel;
-}
-if (obj_input.move_up_hold) {
-    speed_y -= accel;
-}
-if (obj_input.move_down_hold) {
-    speed_y += accel;
-}
-
-if (speed_x != 0) {
-    speed_x -= (sign(speed_x) * accel) / 2;
-}
-if (speed_y != 0) {
-    speed_y -= (sign(speed_y) * accel) / 2;
-}
-
-if (abs(speed_x) &gt; speed_max) {
-    speed_x = sign(speed_x) * speed_max;
-}
-if (abs(speed_y) &gt; speed_max) {
-    speed_y = sign(speed_y) * speed_max;
-}
-
-var dist = point_distance(0, 0, speed_x, speed_y);
-
-var move_x = 0;
-var move_y = 0;
-if (dist != 0) {
-    dir = point_direction(0, 0, speed_x, speed_y);
-    move_x = speed_x * (abs(speed_x) / dist);
-    move_y = speed_y * (abs(speed_y) / dist);
-}
-
-if (place_free(x + move_x, y)) {
-    x += move_x;
-}
-else {
-    move_contact_solid(point_direction(0, 0, move_x, 0), dist);
-    speed_x = 0;
-}
-if (place_free(x, y + move_y)) {
-    y += move_y;
-}
-else {
-    move_contact_solid(point_direction(0, 0, 0, move_y), dist);
-    speed_y = 0;
-}
-
-//Sprites
-
-var sprite_dir = round(dir / 90);
-if (sprite_dir &gt;= 4) {
-    sprite_dir -= 4;
-}
-
-if (dist = 0) {
-    sprite = stand_sprites[sprite_dir];
-}
-else {
-    sprite = run_sprites[sprite_dir];
-    frame += dist / 12;
-    if (frame &gt;= sprite_get_number(sprite)) {
-        frame -= sprite_get_number(sprite);
+            <string>if (!obj_control.paused) {
+    if (inv &gt; 0) {
+        inv --;
+        visible = !visible;
+    }
+    else {
+        visible = true;
+    }
+    
+    if (obj_input.move_left_hold) {
+        speed_x -= accel;
+    }
+    if (obj_input.move_right_hold) {
+        speed_x += accel;
+    }
+    if (obj_input.move_up_hold) {
+        speed_y -= accel;
+    }
+    if (obj_input.move_down_hold) {
+        speed_y += accel;
+    }
+    
+    if (speed_x != 0) {
+        speed_x -= (sign(speed_x) * accel) / 2;
+    }
+    if (speed_y != 0) {
+        speed_y -= (sign(speed_y) * accel) / 2;
+    }
+    
+    if (abs(speed_x) &gt; speed_max) {
+        speed_x = sign(speed_x) * speed_max;
+    }
+    if (abs(speed_y) &gt; speed_max) {
+        speed_y = sign(speed_y) * speed_max;
+    }
+    
+    var dist = point_distance(0, 0, speed_x, speed_y);
+    
+    var move_x = 0;
+    var move_y = 0;
+    if (dist != 0) {
+        dir = point_direction(0, 0, speed_x, speed_y);
+        move_x = speed_x * (abs(speed_x) / dist);
+        move_y = speed_y * (abs(speed_y) / dist);
+    }
+    
+    if (place_free(x + move_x, y)) {
+        x += move_x;
+    }
+    else {
+        move_contact_solid(point_direction(0, 0, move_x, 0), dist);
+        speed_x = 0;
+    }
+    if (place_free(x, y + move_y)) {
+        y += move_y;
+    }
+    else {
+        move_contact_solid(point_direction(0, 0, 0, move_y), dist);
+        speed_y = 0;
+    }
+    
+    //Sprites
+    
+    var sprite_dir = round(dir / 90);
+    if (sprite_dir &gt;= 4) {
+        sprite_dir -= 4;
+    }
+    
+    if (dist = 0) {
+        sprite = stand_sprites[sprite_dir];
+    }
+    else {
+        sprite = run_sprites[sprite_dir];
+        frame += dist / 12;
+        if (frame &gt;= sprite_get_number(sprite)) {
+            frame -= sprite_get_number(sprite);
+        }
     }
 }
 </string>

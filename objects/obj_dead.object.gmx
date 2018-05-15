@@ -25,9 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>speed = 8 + random(2);
-direction = 60 + random(60);
-gravity = 0.5;
+            <string>spd = 8 + random(2);
+dir = 60 + random(60);
+x_speed = lengthdir_x(spd, dir);
+y_speed = lengthdir_y(spd, dir);
+grav = 0.5;
 image_angle = random(360);
 </string>
           </argument>
@@ -51,9 +53,16 @@ image_angle = random(360);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_angle -= hspeed;
-if (y &gt; view_yview[0] + view_hview[0] + 32) {
-    instance_destroy();
+            <string>if (!obj_control.paused) {
+    image_angle -= x_speed;
+    if (y &gt; view_yview[0] + view_hview[0] + 32) {
+        instance_destroy();
+    }
+    
+    x += x_speed;
+    y += y_speed;
+    
+    y_speed += grav;
 }
 </string>
           </argument>

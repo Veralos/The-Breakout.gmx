@@ -58,7 +58,11 @@ image_speed = 0;
             <kind>1</kind>
             <string>can_damage = false;
 
-if (pause &gt; 30 || instance_number(obj_player) &lt; 1) {
+if (obj_control.paused) {
+    speed = 0;
+    gravity = 0;
+}
+else if (pause &gt; 30 || instance_number(obj_player) &lt; 1) {
     pause--;
     if (pause = 30) {
         audio_play_sound(snd_go, 0, false);
