@@ -47,6 +47,15 @@ if (audio_is_playing(mus_main)) {
 else {
     audio_play_sound(mus_main, 0, true);
 }
+
+menu_pause = ds_list_create();
+scr_menu_item(menu_pause, "Continue", scr_continue);
+scr_menu_item(menu_pause, "Restart", scr_restart);
+scr_menu_item(menu_pause, "Exit", scr_exit);
+
+selected = 0;
+
+animate = 0;
 </string>
           </argument>
         </arguments>
@@ -92,7 +101,12 @@ else {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (message &gt; 0) {
+            <string>animate += 0.01;
+if (animate &gt; 1) {
+    animate = 0;
+}
+
+if (message &gt; 0) {
     message--;
 }
 
@@ -123,12 +137,15 @@ if (instance_number(obj_player) &gt; 0) {
         //audio_stop_sound(mus_main);
         //audio_play_sound(snd_back, 0, false);
         //room_goto(rm_title_2);
+        audio_play_sound(snd_back, 0, false);
         paused = !paused;
         if (paused) {
+            audio_pause_sound(mus_main);
             hold_spd = obj_bad.speed;
             hold_dir = obj_bad.direction;
         }
         else {
+            audio_resume_sound(mus_main);
             obj_bad.speed = hold_spd;
             obj_bad.direction = hold_dir;
         }
@@ -139,6 +156,30 @@ if (instance_number(obj_player) &gt; 0) {
             instance_destroy();
         }
         alarm[0] = 60;
+    }
+}
+
+if (paused) {
+    if (obj_input.select_up_pressed) {
+        audio_play_sound(snd_select, 0, false);
+        selected--;
+    }
+    if (obj_input.select_down_pressed) {
+        audio_play_sound(snd_select, 0, false);
+        selected++;
+    }
+    
+    if (selected &gt; ds_list_size(menu_pause) - 1) {
+        selected = 0;
+    }
+    if (selected &lt; 0) {
+        selected = ds_list_size(menu_pause) - 1;
+    }
+    
+    if (obj_input.confirm_pressed) {
+        audio_play_sound(snd_confirm, 0, false);
+        item = ds_list_find_value(menu_pause, selected);
+        script_execute(item[1]);
     }
 }
 </string>
@@ -163,25 +204,7 @@ if (instance_number(obj_player) &gt; 0) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_red);
-draw_rectangle(
-view_xview[0] + 8, 
-view_yview[0] + 8, 
-view_xview[0] + 8 + hp * (view_wview[0] - 16),
-view_yview[0] + 16,
-false
-);
-
-draw_set_color(c_white);
-draw_rectangle(
-view_xview[0] + 8, 
-view_yview[0] + 8, 
-view_xview[0] + 8 + 1 * (view_wview[0] - 16),
-view_yview[0] + 16,
-true
-);
-
-if (message &gt; 0) {
+            <string>if (message &gt; 0) {
     var text = "You still have a prisoner left to free";
     if (instance_number(obj_elf) &gt; 1) {
         text = "You still have " + string(instance_number(obj_elf)) + " prisoners left to free"
@@ -204,6 +227,51 @@ if (hurt) {
     draw_set_alpha(1);
     hurt = false;
 }
+
+if (paused) {
+    draw_set_color(c_black);
+    draw_set_alpha(0.75);
+    draw_rectangle(view_xview[0], view_yview[0], view_xview[0] + view_wview[0], view_yview[0] + view_hview[0], false);
+    
+    draw_set_color(c_white);
+    draw_set_alpha(1);
+    
+    var anim = sin(animate * 2 * pi);
+    
+    draw_set_font(fnt_end);
+    
+    draw_text_transformed(view_xview[0] + view_wview[0] / 2, view_yview[0] + 64, "Paused", 1 + 0.02 * anim, 1 + 0.02 * anim, 0);
+    
+    draw_set_font(fnt_main);
+    
+    var item;
+    for (var i = 0; i &lt; ds_list_size(menu_pause); i++) {
+        item = ds_list_find_value(menu_pause, i);
+        draw_text(view_xview[0] + view_wview[0] / 2, view_yview[0] + view_hview[0] / 2 + i * 40, item[0]);
+        if (i == selected) {
+            draw_text(view_xview[0] + view_wview[0] / 2 - 52 + 2 * anim, view_yview[0] + view_hview[0] / 2 + i * 40, "&gt;");
+            draw_text(view_xview[0] + view_wview[0] / 2 + 52 - 2 * anim, view_yview[0] + view_hview[0] / 2 + i * 40, "&lt;");
+        }
+    }
+}
+
+draw_set_color(c_red);
+draw_rectangle(
+view_xview[0] + 8, 
+view_yview[0] + 8, 
+view_xview[0] + 8 + hp * (view_wview[0] - 16),
+view_yview[0] + 16,
+false
+);
+
+draw_set_color(c_white);
+draw_rectangle(
+view_xview[0] + 8, 
+view_yview[0] + 8, 
+view_xview[0] + 8 + 1 * (view_wview[0] - 16),
+view_yview[0] + 16,
+true
+);
 </string>
           </argument>
         </arguments>

@@ -96,6 +96,9 @@
       <script>scripts\scr_scale.gml</script>
       <script>scripts\scr_sound.gml</script>
       <script>scripts\scr_music.gml</script>
+      <script>scripts\scr_continue.gml</script>
+      <script>scripts\scr_restart.gml</script>
+      <script>scripts\scr_exit.gml</script>
       <script>scripts\scr_rebind_keyboard.gml</script>
       <script>scripts\scr_rebind_gamepad.gml</script>
     </scripts>
