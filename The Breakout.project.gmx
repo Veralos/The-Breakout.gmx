@@ -117,8 +117,8 @@
     <script>scripts\scr_map_value_exists.gml</script>
     <script>scripts\scr_check_gamepad_buttons.gml</script>
     <script>scripts\scr_end.gml</script>
+    <script>scripts\scr_check_gamepad.gml</script>
   </scripts>
-  <shaders name="shaders"/>
   <fonts name="fonts">
     <font>fonts\fnt_main</font>
     <font>fonts\fnt_small</font>

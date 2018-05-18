@@ -63,6 +63,7 @@ ds_list_add(music_list,
 );
 
 scr_list_gain(sound_list, sound_gain);
+audio_sound_gain(snd_swing, audio_sound_get_gain(snd_swing) * 0.2, 0);
 scr_list_gain(music_list, music_gain);
 </string>
           </argument>
@@ -97,7 +98,7 @@ scr_list_gain(music_list, music_gain);
     ini_close();
     
     scr_list_gain(sound_list, sound_gain);
-    audio_sound_gain(snd_swing, audio_sound_get_gain(snd_swing) * 0.3, 0);
+    audio_sound_gain(snd_swing, audio_sound_get_gain(snd_swing) * 0.2, 0);
 }
 
 if (music_gain != music_gain_set) {
