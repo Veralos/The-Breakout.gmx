@@ -336,6 +336,25 @@ for (var i = 0; i &lt; size; i++) {
 }
 draw_text(room_width * (7 / 8) - 52 + 2 * anim, 30 + spacing * selected, "&gt;");
 
+/*draw_text(room_width * (1 / 8), room_height - 24, "Select");
+draw_text(room_width * (3 / 8), room_height - 24, "Confirm");
+draw_text(room_width * (5 / 8), room_height - 24, "Back");
+
+draw_set_font(fnt_small);
+
+if (obj_input.gamepad) {
+    draw_text(room_width * (1 / 8), room_height - 10, "Left Stick");
+    draw_text(room_width * (3 / 8), room_height - 10, "A");
+    draw_text(room_width * (5 / 8), room_height - 10, "B");
+}
+else {
+    draw_text(room_width * (1 / 8), room_height - 10, "Up/Down");
+    draw_text(room_width * (3 / 8), room_height - 10, "A");
+    draw_text(room_width * (5 / 8), room_height - 10, "Escape");
+}*/
+
+scr_draw_menu_controls(room_width * (3 / 8), room_height - 24);
+
 if (rebind) {
     draw_set_alpha(0.75);
     draw_set_color(c_black);

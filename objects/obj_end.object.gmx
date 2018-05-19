@@ -56,7 +56,7 @@ alpha = 0;
         alpha += 0.005;
     }
 
-    if (keyboard_check_pressed(vk_anykey) || obj_input.hold_pressed) {
+    if (keyboard_check_pressed(vk_anykey) || obj_input.confirm_pressed) {
         audio_stop_sound(mus_end);
         audio_play_sound(snd_back, 0, false);
         room_goto(rm_title_2);
@@ -96,7 +96,12 @@ draw_text(room_width / 2, room_height / 2 - 40, "The End");
 
 draw_set_font(fnt_main);
 
-draw_text(room_width / 2, room_height / 2 + 25, "Press any key to exit");
+if (obj_input.gamepad) {
+    draw_text(room_width / 2, room_height / 2 + 25, "Press A to exit");
+}
+else {
+    draw_text(room_width / 2, room_height / 2 + 25, "Press any key to exit");
+}
 
 draw_set_alpha(1);
 </string>

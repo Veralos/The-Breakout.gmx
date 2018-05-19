@@ -133,10 +133,7 @@ if (instance_number(obj_player) &gt; 0) {
         view_yview[0] = lerp(view_yview[0], obj_player.y - vh / 2 + vborder, 0.5);
     }
     
-    if (keyboard_check_pressed(vk_escape)) {
-        //audio_stop_sound(mus_main);
-        //audio_play_sound(snd_back, 0, false);
-        //room_goto(rm_title_2);
+    if (obj_input.back_pressed) {
         audio_play_sound(snd_back, 0, false);
         paused = !paused;
         if (paused) {
@@ -248,12 +245,14 @@ if (paused) {
     var item;
     for (var i = 0; i &lt; ds_list_size(menu_pause); i++) {
         item = ds_list_find_value(menu_pause, i);
-        draw_text(view_xview[0] + view_wview[0] / 2, view_yview[0] + view_hview[0] / 2 + i * 40, item[0]);
+        draw_text(view_xview[0] + view_wview[0] / 2, view_yview[0] + view_hview[0] / 2 - 20 + i * 40, item[0]);
         if (i == selected) {
-            draw_text(view_xview[0] + view_wview[0] / 2 - 52 + 2 * anim, view_yview[0] + view_hview[0] / 2 + i * 40, "&gt;");
-            draw_text(view_xview[0] + view_wview[0] / 2 + 52 - 2 * anim, view_yview[0] + view_hview[0] / 2 + i * 40, "&lt;");
+            draw_text(view_xview[0] + view_wview[0] / 2 - 52 + 2 * anim, view_yview[0] + view_hview[0] / 2 - 20 + i * 40, "&gt;");
+            draw_text(view_xview[0] + view_wview[0] / 2 + 52 - 2 * anim, view_yview[0] + view_hview[0] / 2 - 20 + i * 40, "&lt;");
         }
     }
+    
+    scr_draw_menu_controls(view_xview[0] + view_wview[0] / 2, view_yview[0] + view_hview[0] - 24);
 }
 
 draw_set_color(c_red);

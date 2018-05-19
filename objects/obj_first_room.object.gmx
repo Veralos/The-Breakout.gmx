@@ -3,11 +3,64 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-999</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var script = scr_addon_keyboard;
+if (obj_input.gamepad) {
+    script = scr_addon_gamepad;
+}
+
+var left = script_execute(script, obj_input.controls.move_left);
+var right = script_execute(script, obj_input.controls.move_right);
+var up = script_execute(script, obj_input.controls.move_up);
+var down = script_execute(script, obj_input.controls.move_down);
+var hold = script_execute(script, obj_input.controls.hold_ball);
+
+draw_set_color(c_white);
+draw_set_font(fnt_main);
+draw_set_halign(fa_middle);
+draw_set_valign(fa_middle);
+
+if (obj_input.gamepad) {
+    draw_text_ext(view_xview[0] + view_wview[0] / 2, view_yview[0] + view_hview[0] * (1 / 8), 
+        "Use the Left Stick or " + left + ", " + right + ", " + up + " and " + down + " to move",
+        -1, room_width - 32
+    );
+}
+else {
+    draw_text_ext(view_xview[0] + view_wview[0] / 2, view_yview[0] + view_hview[0] * (1 / 8), 
+        "Use " + left + ", " + right + ", " + up + " and " + down + " to move",
+        -1, room_width - 32
+    );
+}
+
+draw_text(view_xview[0] + view_wview[0] / 2, view_yview[0] + view_hview[0] * (7 / 8), "Swing your ball to break obstacles#Press " + hold + " to hold it in place for a moment#Walk away while it's held to give it extra speed when released");
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
