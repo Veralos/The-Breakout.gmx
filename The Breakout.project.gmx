@@ -26,6 +26,7 @@
     <sound>sound\mus_main</sound>
     <sound>sound\mus_end</sound>
     <sound>sound\mus_title</sound>
+    <sound>sound\snd_deflect</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_player</sprite>
@@ -71,11 +72,14 @@
     <sprite>sprites\spr_orb_2</sprite>
     <sprite>sprites\spr_sitting</sprite>
     <sprite>sprites\spr_cell</sprite>
-    <sprite>sprites\sprite43</sprite>
+    <sprite>sprites\spr_tile</sprite>
+    <sprite>sprites\spr_flower</sprite>
+    <sprite>sprites\spr_arrow_deflect</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_tiles</background>
     <background>background\bg_grass</background>
+    <background>background\bg_grass2</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -162,6 +166,8 @@
     <object>objects\obj_display</object>
     <object>objects\obj_audio</object>
     <object>objects\obj_levels</object>
+    <object>objects\obj_flower</object>
+    <object>objects\obj_tile</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_init</room>

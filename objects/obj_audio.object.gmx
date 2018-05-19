@@ -53,6 +53,7 @@ ds_list_add(sound_list,
     snd_select,
     snd_error,
     snd_back,
+    snd_deflect
 );
 
 music_list = ds_list_create();

@@ -36,6 +36,7 @@ with (destroy) {
     flicker.sprite_index = sprite_index;
     instance_destroy();
 }
+room_speed = 10;
 </string>
           </argument>
         </arguments>
